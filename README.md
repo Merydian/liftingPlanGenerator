@@ -22,7 +22,7 @@ This Python program generates personalized weightlifting training plans based on
 
 1. **Install Dependencies:**
    ```bash
-   pip install pandas tabulate
+   pip install pandas tabulate bs4
    ```
 
 2. **Run the Program:**
