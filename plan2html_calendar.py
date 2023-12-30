@@ -356,7 +356,7 @@ class plan2html:
         test = "<h1>Test</h1>"
         plan = "<h1>Plan</h1>"
         uebungen = "<h1>Übungen (Links)</h1>"
-        name = f"plaene/{self.name}_{date.today()}.html"
+        name = f"plans/{self.name}_{date.today()}.html"
         with open(name, "w") as file:
             text = (
                 self.table_style()
@@ -431,7 +431,7 @@ class plan2html:
                     else:
                         current_date = current_date + timedelta(days=3)
 
-        name = f"plaene/{self.name}_{date.today()}_calendar.csv"
+        name = f"plans/{self.name}_{date.today()}_calendar.csv"
         dd.to_csv(name, index=False)
         print(f"Saved at: {name}")
 
