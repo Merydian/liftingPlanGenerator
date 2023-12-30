@@ -6,6 +6,20 @@ from datetime import datetime, timedelta, date
 
 class plan2html:
     def __init__(self, name, gender, h, m, a, test, days, weeks, start=None):
+        """
+        Initializes a plan2html object.
+
+        Parameters:
+        - name (str): Name of the user.
+        - gender (str): Gender of the user ('m' or 'f').
+        - h (int): Height of the user in centimeters.
+        - m (int): Weight of the user in kilograms.
+        - a (int): Age of the user.
+        - test (dict): Dictionary containing exercise test details.
+        - days (int): Number of training days per week.
+        - weeks (int): Number of training weeks.
+        - start (datetime): Start date of the training plan.
+        """
         self.dd = None
         self.days = days
         self.name = name
@@ -34,6 +48,12 @@ class plan2html:
         self.calendar()
 
     def BMICalc(self):
+        """
+        Calculates BMI and categorizes it.
+
+        Returns:
+        - tuple: BMI value and corresponding category.
+        """
         bmi = round(self.m / ((self.h) / 100) ** 2, 2)
 
         if bmi < 18:  # First step, is it less than 18?
@@ -54,6 +74,9 @@ class plan2html:
         return bmi, text
 
     def BMRCalc(self):
+        """
+        Calculates BMR based on gender.
+        """
         if self.gender == "f" or "female":
             self.bmr = round(
                 (655 + (4.35 * self.m) + (4.7 * self.h) - (4.7 * self.a)) * 1.5
@@ -64,7 +87,17 @@ class plan2html:
                 (66 + (6.2 * self.m) + (12.7 * self.h) - (6.76 * self.a)) * 1.5
             )
 
-    def rm(self, w, r):
+    def rm(self, w, r)
+        """
+        Calculates 1RM based on weight and reps.
+
+        Parameters:
+        - w (float): Weight used in the exercise.
+        - r (int): Number of repetitions performed.
+
+        Returns:
+        - float: Calculated 1RM value.
+        """
         x = w * (1 + (r / 30))
         y = (100 * w) / (101.3 - 2.6713 * r)
         z = w * r**0.10
@@ -75,6 +108,9 @@ class plan2html:
         return 2.5 * round(((rm + s) / 2 * 0.97725) / 2.5, 1)
 
     def getMaxs(self):
+        """
+        Calculates maximum weights for each exercise.
+        """
         for i in self.test:
             w = self.test[i][0]
             r = self.test[i][1]
@@ -82,6 +118,22 @@ class plan2html:
             self.maxs[i] = max
 
     def rpe(self, exercise, rpe, sets, reps, week, ov, roundval=2.5, accessory=False):
+        """
+        Generates formatted HTML for each exercise.
+
+        Parameters:
+        - exercise (str): Name of the exercise.
+        - rpe (float): Rate of perceived exertion.
+        - sets (int): Number of sets.
+        - reps (int or str): Number of repetitions or 'X' for AMRAP.
+        - week (int): Current training week.
+        - ov (float): Bi-Weekly overload value.
+        - roundval (float): Value for rounding the weight.
+        - accessory (bool): Flag indicating if the exercise is an accessory exercise.
+
+        Returns:
+        - str: Formatted HTML for the exercise.
+        """
         reps = str(reps)
         if week % self.deload == 0:
             sets = round(sets / 2)
@@ -100,6 +152,12 @@ class plan2html:
             )
 
     def ueberblick(self):
+        """
+        Generates HTML summary of user details.
+
+        Returns:
+        - str: Formatted HTML summary.
+        """
         header = [
             "Name",
             "Height [cm]",
@@ -124,6 +182,12 @@ class plan2html:
         return tabulate([header, main], tablefmt="html")
 
     def amrap_test(self):
+        """
+        Generates HTML table for AMRAP test results.
+
+        Returns:
+        - str: Formatted HTML table.
+        """
         header = [""] + [i.title() for i in list(self.test.keys())]
         test = ["Test [Reps@Weight]"] + [
             ", ".join(str(y) for y in self.test[i][::-1]) for i in self.test
@@ -134,12 +198,21 @@ class plan2html:
         return tabulate([header, test, rm, bw], tablefmt="html")
 
     def table_style(self):
+        """
+        Reads CSS style for HTML tables.
+
+        Returns:
+        - str: CSS style.
+        """
         with open("utils/style.css") as file:
             style = file.read()
 
         return style
 
     def plan(self):
+        """
+        Generates HTML plan based on the number of days and weeks.
+        """
         if self.days == 2:
             ov = 0
 
@@ -286,6 +359,12 @@ class plan2html:
                 self.program += tabulate(x, tablefmt="html")
 
     def annotation(self):
+        """
+        Generates HTML annotations with exercise links.
+
+        Returns:
+        - str: Formatted HTML annotations.
+        """
         def anno(exercise, link):
             return f'<a href="{link}">{exercise}</a>'
 
@@ -352,6 +431,9 @@ class plan2html:
         return "<br>".join(annos)
 
     def calendar(self):
+        """
+        Generates a DataFrame for the calendar and populates it.
+        """
         dd = pd.DataFrame(
             columns=[
                 "Subject",
@@ -406,6 +488,9 @@ class plan2html:
             self.dd = dd
 
     def save(self):
+        """
+        Saves HTML and CSV files with user's plan and calendar.
+        """
         ueberblick = "<h1>Überblick</h1>"
         test = "<h1>Test</h1>"
         plan = "<h1>Plan</h1>"
