@@ -1,0 +1,85 @@
+<style>
+/* Define the Open Sans font */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+/* Apply Open Sans font to all elements */
+body{
+    font-family: 'Open Sans', sans-serif;
+    background-color: #000000;
+}
+
+/* Style for workout tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    font-size: 16px; /* Adjust font size as needed */
+}
+
+tr:first-child td {
+    color: white;
+}
+
+td:nth-child(1) {
+  color: white;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ccc;
+}
+
+/* Style for alternating row colors */
+tbody tr:nth-child(even) {
+    background-color: #bad6cc;
+}
+
+tbody tr:nth-child(odd) {
+    color: white;
+}
+
+/* Style for workout table captions */
+caption {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+/* Style for headers in the tables */
+table th:first-child,
+table td:first-child {
+    text-align: left;
+    padding-left: 15px;
+}
+
+/* Style for the first column in each row */
+table tr td:first-child {
+    font-weight: bold;
+    background-color: #183D3D;
+}
+
+/* Add a border around tables */
+table {
+    border: 1px solid #333;
+    font-size: 26px;
+}
+
+/* Style for alternating row colors within the "Plan" section */
+h1 {
+    text-align: center;
+    color: #ffffff;
+}
+
+/* Add some spacing for better readability */
+th {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+a {
+  color: lightblue;
+    font-size: 26px;
+}
+</style>
+
