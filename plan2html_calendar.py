@@ -415,21 +415,21 @@ class plan2html:
 
                 if self.days == 2:
                     if i == 0:
-                        current_date = current_date + timedelta(days=3)
+                        current_date += timedelta(days=3)
                     else:
-                        current_date = current_date + timedelta(days=4)
+                        current_date += timedelta(days=4)
                 if self.days == 3:
                     if i in [0, 1]:
-                        current_date = current_date + timedelta(days=2)
+                        current_date += timedelta(days=2)
                     else:
-                        current_date = current_date + timedelta(days=3)
+                        current_date += timedelta(days=3)
                 elif self.days == 4:
                     if i in [0, 2]:
-                        current_date = current_date + timedelta(days=1)
+                        current_date += timedelta(days=1)
                     elif i == 1:
-                        current_date = current_date + timedelta(days=2)
+                        current_date += timedelta(days=2)
                     else:
-                        current_date = current_date + timedelta(days=3)
+                        current_date += timedelta(days=3)
 
         name = f"plans/{self.name}_{date.today()}_calendar.csv"
         dd.to_csv(name, index=False)
