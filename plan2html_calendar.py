@@ -438,4 +438,4 @@ class plan2html:
 
 if __name__ == "__main__":
     rm = {"benchpress": (70, 8), "squat": (90, 10), "lat pulldown": (85, 10)}
-    plan2html("@lukas.qn", "m", 192, 95, 24, rm, 4, 1, datetime(2023, 12, 25))
+    plan2html("dummy", "m", 192, 95, 24, rm, 4, 1, datetime(2023, 12, 25))
