@@ -6,6 +6,7 @@ from datetime import datetime, timedelta, date
 
 class plan2html:
     def __init__(self, name, gender, h, m, a, test, days, weeks, start=None):
+        self.dd = None
         self.days = days
         self.name = name
         self.gender = gender
@@ -30,7 +31,6 @@ class plan2html:
         self.BMRCalc()
         self.BMICalc()
         self.plan()
-        self.combine()
         self.calendar()
 
     def BMICalc(self):
@@ -93,9 +93,9 @@ class plan2html:
             return (
                 f"bold{exercise.title()}"
                 f":boldendlinebreak{sets}x"
-                f"{reps}x{str(roundval * 
-                                  round(((self.maxs[exercise] * 
-                                          self.lut.loc[rpe][reps])*0.95) / roundval) + ov)}"
+                f"{reps}x{str(roundval *
+                              round(((self.maxs[exercise] *
+                                      self.lut.loc[rpe][reps])*0.95) / roundval) + ov)}"
                 f"linebreaklinebreak"
             )
 
@@ -227,7 +227,7 @@ class plan2html:
                 x = [
                     [f"Week: {week}", "Day 1", "Day 2", "Day 3"],
                     desc + dayOne + dayTwo + dayThree,
-                ]
+                    ]
                 self.program += tabulate(x, tablefmt="html")
 
         if self.days == 4:
@@ -282,7 +282,7 @@ class plan2html:
                 x = [
                     [f"Week: {week}", "Day 1", "Day 2", "Day 3", "Day 4"],
                     desc + dayOne + dayTwo + dayThree + dayFour,
-                ]
+                    ]
                 self.program += tabulate(x, tablefmt="html")
 
     def annotation(self):
@@ -351,34 +351,6 @@ class plan2html:
 
         return "<br>".join(annos)
 
-    def combine(self):
-        ueberblick = "<h1>Überblick</h1>"
-        test = "<h1>Test</h1>"
-        plan = "<h1>Plan</h1>"
-        uebungen = "<h1>Übungen (Links)</h1>"
-        name = f"plans/{self.name}_{date.today()}.html"
-        with open(name, "w") as file:
-            text = (
-                self.table_style()
-                + ueberblick
-                + self.ueberblick()
-                + test
-                + self.amrap_test()
-                + plan
-                + self.program
-                + uebungen
-                + self.annotation()
-            )
-            text = (
-                text.replace("linebreak", "<br>")
-                .replace("boldend", "</b>")
-                .replace("bold", "<b>")
-            )
-            soup = bs(text, features="html.parser")
-            prettyHTML = soup.prettify()
-            file.write(prettyHTML)
-        print(f"Saved at: {name}")
-
     def calendar(self):
         dd = pd.DataFrame(
             columns=[
@@ -431,11 +403,42 @@ class plan2html:
                     else:
                         current_date += timedelta(days=3)
 
+            self.dd = dd
+
+    def save(self):
+        ueberblick = "<h1>Überblick</h1>"
+        test = "<h1>Test</h1>"
+        plan = "<h1>Plan</h1>"
+        uebungen = "<h1>Übungen (Links)</h1>"
+        name = f"plans/{self.name}_{date.today()}.html"
+        with open(name, "w") as file:
+            text = (
+                    self.table_style()
+                    + ueberblick
+                    + self.ueberblick()
+                    + test
+                    + self.amrap_test()
+                    + plan
+                    + self.program
+                    + uebungen
+                    + self.annotation()
+            )
+            text = (
+                text.replace("linebreak", "<br>")
+                .replace("boldend", "</b>")
+                .replace("bold", "<b>")
+            )
+            soup = bs(text, features="html.parser")
+            prettyHTML = soup.prettify()
+            file.write(prettyHTML)
+        print(f"HTML Plan saved at: {name}")
+
         name = f"plans/{self.name}_{date.today()}_calendar.csv"
-        dd.to_csv(name, index=False)
-        print(f"Saved at: {name}")
+        self.dd.to_csv(name, index=False)
+        print(f"Calendar CSV saved at: {name}")
 
 
 if __name__ == "__main__":
     rm = {"benchpress": (70, 8), "squat": (90, 10), "lat pulldown": (85, 10)}
-    plan2html("dummy", "m", 192, 95, 24, rm, 4, 1, datetime(2023, 12, 25))
+    plan = plan2html("dummy", "m", 192, 95, 24, rm, 4, 1, datetime(2023, 12, 25))
+    plan.save()
