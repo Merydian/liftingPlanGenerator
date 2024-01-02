@@ -313,7 +313,7 @@ class plan2html:
                 week = i + 1
 
                 desc = [
-                    "[Sätze xlinebreakWiederholungen xlinebreakGewicht, linebreak@ RPE]"
+                    "[Sets xlinebreakReos xlinebreakWeight/RPE]"
                 ]
 
                 dayOne = [
