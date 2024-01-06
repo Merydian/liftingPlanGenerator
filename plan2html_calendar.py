@@ -139,7 +139,7 @@ class plan2html:
             sets = round(sets / 2)
         if accessory:
             return (
-                f"{exercise.title()}:linebreak{sets}x{reps}xX @{rpe}linebreaklinebreak"
+                f"{exercise.title()}:linebreak{sets}x{reps} @{rpe}linebreaklinebreak"
             )
         else:
             return (
@@ -481,6 +481,9 @@ class plan2html:
                         current_date += timedelta(days=3)
 
             self.dd = dd
+
+    def e1rm(self):
+
 
     def save(self):
         """
