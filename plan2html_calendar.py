@@ -87,7 +87,7 @@ class plan2html:
                 (66 + (6.2 * self.m) + (12.7 * self.h) - (6.76 * self.a)) * 1.5
             )
 
-    def rm(self, w, r)
+    def rm(self, w, r):
         """
         Calculates 1RM based on weight and reps.
 
@@ -135,7 +135,7 @@ class plan2html:
         - str: Formatted HTML for the exercise.
         """
         reps = str(reps)
-        if week % self.deload == 0:
+        if week % self.deload == 0 or week == 1:
             sets = round(sets / 2)
         if accessory:
             return (
@@ -525,5 +525,5 @@ class plan2html:
 
 if __name__ == "__main__":
     rm = {"benchpress": (70, 8), "squat": (90, 10), "lat pulldown": (85, 10)}
-    plan = plan2html("dummy", "m", 192, 95, 24, rm, 4, 1, datetime(2023, 12, 25))
+    plan = plan2html("dummy", "m", 192, 95, 24, rm, 4, 10, datetime(2023, 12, 25))
     plan.save()
