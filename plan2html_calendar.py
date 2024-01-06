@@ -482,9 +482,6 @@ class plan2html:
 
             self.dd = dd
 
-    def e1rm(self):
-
-
     def save(self):
         """
         Saves HTML and CSV files with user's plan and calendar.
