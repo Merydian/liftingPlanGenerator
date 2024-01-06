@@ -213,6 +213,11 @@ class plan2html:
         """
         Generates HTML plan based on the number of days and weeks.
         """
+
+        desc = [
+            "[Sets xlinebreakReps xlinebreakWeight/RPE]"
+        ]
+
         if self.days == 2:
             ov = 0
 
@@ -221,8 +226,6 @@ class plan2html:
                     ov += self.ov
 
                 week = i + 1
-
-                desc = ["[Sätze xlinebreakWiederholungen xlinebreakGewicht]"]
 
                 dayOne = [
                     self.rpe("benchpress", 7, 3, 10, week, ov)
@@ -259,10 +262,6 @@ class plan2html:
                     ov += self.ov
 
                 week = i + 1
-
-                desc = [
-                    "[Sätze xlinebreakWiederholungen xlinebreakGewicht,linebreak@ RPE]"
-                ]
 
                 dayOne = [
                     self.rpe("benchpress", 7, 3, 10, week, ov)
@@ -311,10 +310,6 @@ class plan2html:
                     ov += self.ov
 
                 week = i + 1
-
-                desc = [
-                    "[Sets xlinebreakReos xlinebreakWeight/RPE]"
-                ]
 
                 dayOne = [
                     self.rpe("lat pulldown", 8.5, 3, 10, week, ov)
